@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@theme {
+	--font-sans: "Segoe UI", "Avenir Next", sans-serif;
+	--color-brand: #3b82f6;
+	--color-brand-hover: #2563eb;
+	--color-brand-light: rgb(37 99 235 / 20%);
+	--color-brand-dark: rgb(14 116 144 / 22%);
+}
+
+:root {
+	font-family: var(--font-sans);
+	line-height: 1.5;
+	font-weight: 400;
+	color: #0f172a;
+	background: #f8fafc;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	min-height: 100svh;
+	background:
+		radial-gradient(circle at 15% 10%, var(--color-brand-light) 0, transparent 40%),
+		radial-gradient(circle at 80% 90%, var(--color-brand-dark) 0, transparent 45%),
+		linear-gradient(165deg, #eff6ff 0%, #f1f5f9 60%, #ecfeff 100%);
+}
+
+#app {
+	min-height: 100svh;
+}
