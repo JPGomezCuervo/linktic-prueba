@@ -4,6 +4,7 @@ import InventoryView from "@views/InventoryView.vue";
 import LoginView from "@views/LoginView.vue";
 import OrdersView from "@views/OrdersView.vue";
 import ProfileView from "@views/ProfileView.vue";
+import NotFoundView from "@views/NotFoundView.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 import { pinia } from "@/stores";
@@ -51,6 +52,11 @@ const router = createRouter({
 				},
 			],
 		},
+		{
+			path: "/:pathMatch(.*)*",
+			name: "NotFound",
+			component: NotFoundView,
+		}
 	],
 });
 
