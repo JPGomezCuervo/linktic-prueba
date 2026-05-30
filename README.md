@@ -54,19 +54,21 @@ go run cmd/migrate/main.go -d up
 Use `-env` to run migrations against a different database:
 
 ```bash
+# from /back
 go run cmd/migrate/main.go -db=/path/to/db -m=migrations up
 ```
 
 ### Seeding
 
 ```bash
-sqlite3 back/db/linktic.db < back/db/seed.sql
+# from /back
+sqlite3 db/linktic.db < db/seed.sql
 ```
 
 ### Running the Server
 
 ```bash
-cd back
+# from /back
 go run cmd/app/main.go -d
 ```
 
@@ -125,12 +127,6 @@ npm run dev
 
 The dev server runs on `http://localhost:5173` and proxies `/api` requests to `http://localhost:8080`.
 
-### Build
-
-```bash
-npm run build
-```
-
 ### Testing
 
 ```bash
@@ -143,7 +139,6 @@ npm run test:e2e      # Headless
 npm run test:e2e:ui   # Interactive UI
 ```
 
-### E2E Test Setup
 
 E2E tests require a separate test database and both servers running:
 
