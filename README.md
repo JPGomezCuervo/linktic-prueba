@@ -19,7 +19,46 @@ linktic/
     └── e2e/       # Playwright end-to-end tests
 ```
 
+## Running with Docker (recommended)
+
+The fastest way to get the whole stack running is Docker Compose. From the repo root:
+
+```bash
+docker compose up --build
+```
+
+This builds and starts both services:
+
+- **Frontend** → http://localhost:5173 (Vite dev server with hot reload)
+- **Backend API** → http://localhost:8080
+
+The backend container automatically runs migrations and seeds the database on first
+start (`SEED=true`), persisting the SQLite file in the `back-db` named volume. The
+frontend proxies `/api` requests to the `back` container.
+
+Useful variations:
+
+```bash
+docker compose up -d              # Run in the background (detached)
+docker compose up --build         # Rebuild images after code changes
+docker compose down               # Stop and remove containers
+docker compose down -v            # Also delete the database volume
+```
+
+Override the JWT secret (defaults to `dev-secret-change-me`):
+
+```bash
+JWT_SECRET=your-secret docker compose up --build
+```
+
+> **Note:** The Docker images are runtime-only and **do not run the tests**. To run
+> the test suites you need the toolchains installed locally — see
+> [Prerequisites](#prerequisites) and the [Testing](#testing) sections below.
+
 ## Prerequisites
+
+The following are only required for **local development** and **running the tests**
+(the Docker setup above bundles everything else):
 
 - **Go** 1.26+
 - **Node.js** 20+
@@ -79,6 +118,18 @@ go run cmd/app/main.go -d -p 3000
 go run cmd/app/main.go -env .env.production
 ```
 
+### Testing
+
+The backend tests run with the standard Go toolchain — they are **not** included in
+the Docker image, so you need **Go 1.26+** installed locally:
+
+```bash
+# from /back
+go test ./...           # Run all tests
+go test ./... -v        # Verbose
+go test ./internal/...  # A specific package tree
+```
+
 ### API Endpoints
 
 | Method | Path | Auth | Description |
@@ -128,6 +179,9 @@ npm run dev
 The dev server runs on `http://localhost:5173` and proxies `/api` requests to `http://localhost:8080`.
 
 ### Testing
+
+> Tests are not run inside Docker. You need **Node.js 20+** and the project's dev
+> dependencies installed locally (`npm install`) to run them.
 
 ```bash
 # Unit tests (Vitest)

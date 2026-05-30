@@ -1,0 +1,31 @@
+services:
+  back:
+    build:
+      context: ./back
+    container_name: linktic-back
+    environment:
+      DATABASE_PATH: /app/db/linktic.db
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-change-me}
+      PORT: "8080"
+      SEED: "true"
+    volumes:
+      - back-db:/app/db
+    ports:
+      - "8080:8080"
+
+  front:
+    build:
+      context: ./front
+    container_name: linktic-front
+    environment:
+      VITE_API_PROXY_TARGET: http://back:8080
+    volumes:
+      - ./front:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - back
+
+volumes:
+  back-db:
